@@ -1,0 +1,7 @@
+{
+  "name": "pokedexx",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
