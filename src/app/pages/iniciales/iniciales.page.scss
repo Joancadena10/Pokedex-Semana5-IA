@@ -1,0 +1,23 @@
+.catalogo {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.catalogo h1 { margin: 0 0 8px; font-size: 1.8rem; }
+.catalogo > p { line-height: 1.5; }
+
+.tarjetas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.tarjetas ion-card { margin: 0; }
+.tarjetas img { display: block; width: 100%; height: 190px; object-fit: contain; padding: 16px; }
+.tarjetas h2 { font-size: 1.25rem; font-weight: 700; margin: 0 0 4px; }
+.tarjetas p { margin: 0; }
+
+.estado { display: flex; align-items: center; gap: 12px; padding: 30px 0; }
+.error { color: var(--ion-color-danger); font-weight: 600; padding: 18px 0; }

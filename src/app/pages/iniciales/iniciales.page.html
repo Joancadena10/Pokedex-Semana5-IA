@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Pokédex · Iniciales</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <main class="catalogo">
+    <h1>Los tres Pokémon iniciales</h1>
+    <p>Primera funcionalidad del proyecto (HU-01): Bulbasaur, Charmander y Squirtle.</p>
+
+    <div class="estado" *ngIf="cargando" aria-live="polite">
+      <ion-spinner name="crescent"></ion-spinner>
+      <span>Cargando catálogo...</span>
+    </div>
+
+    <p class="error" *ngIf="!cargando && mensajeError" role="alert">
+      {{ mensajeError }}
+    </p>
+
+    <section class="tarjetas" *ngIf="!cargando && !mensajeError" aria-label="Tres Pokémon admitidos">
+      <ion-card *ngFor="let pokemon of pokemons">
+        <img [src]="pokemon.image" [alt]="'Imagen de ' + pokemon.name" />
+        <ion-card-content>
+          <h2>{{ pokemon.name }}</h2>
+          <p>Pokédex #{{ pokemon.id }}</p>
+        </ion-card-content>
+      </ion-card>
+    </section>
+
+    <ion-button routerLink="/home" expand="block" fill="outline">
+      Ir a la Pokédex completa (151)
+    </ion-button>
+  </main>
+</ion-content>

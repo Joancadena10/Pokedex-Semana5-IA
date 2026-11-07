@@ -3,6 +3,11 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
 
   {
+    path: 'inicio',
+    loadComponent: () => import('./pages/iniciales/iniciales.page').then(m => m.InicialesPage)
+  },
+
+  {
     path: 'home',
 
     loadComponent: () =>
@@ -29,7 +34,7 @@ export const routes: Routes = [
   {
     path: '',
 
-    redirectTo: 'home',
+    redirectTo: 'inicio',
 
     pathMatch: 'full'
   }
