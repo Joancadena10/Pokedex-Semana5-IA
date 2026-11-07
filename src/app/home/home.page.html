@@ -1,20 +1,667 @@
-<ion-header [translucent]="true">
+<ion-header>
+
   <ion-toolbar>
+
     <ion-title>
-      Blank
+      Pokédex
     </ion-title>
+
   </ion-toolbar>
+
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+<ion-content>
+
+  <div class="contenedor">
+
+
+    <section class="hero">
+
+      <h1>
+        Pokédex
+      </h1>
+
+      <p>
+        Consulta, agrega, edita y elimina Pokémon
+      </p>
+
+    </section>
+
+
+    <!-- FILTROS -->
+
+    <ion-card class="busqueda-card">
+
+      <ion-card-content>
+
+
+        <ion-searchbar
+          placeholder="Buscar por nombre o número..."
+          [value]="textoBusqueda"
+          (ionInput)="buscarPokemon($event)">
+        </ion-searchbar>
+
+
+        <ion-grid>
+
+          <ion-row>
+
+
+            <ion-col
+              size="12"
+              size-md="4">
+
+              <ion-select
+                label="Tipo"
+                label-placement="stacked"
+                interface="popover"
+                placeholder="Todos"
+                [value]="tipoSeleccionado"
+                (ionChange)="filtrarTipo($event)">
+
+
+                <ion-select-option
+                  value="">
+
+                  Todos
+
+                </ion-select-option>
+
+
+                <ion-select-option
+                  *ngFor="
+                    let tipo
+                    of tipos
+                  "
+                  [value]="tipo.name">
+
+                  {{
+                    tipo.name
+                    | titlecase
+                  }}
+
+                </ion-select-option>
+
+
+              </ion-select>
+
+            </ion-col>
+
+
+            <ion-col
+              size="12"
+              size-md="4">
+
+              <ion-select
+                label="Generación"
+                label-placement="stacked"
+                interface="popover"
+                placeholder="Todas"
+                [value]="generacionSeleccionada"
+                (ionChange)="filtrarGeneracion($event)">
+
+
+                <ion-select-option
+                  value="">
+
+                  Todas
+
+                </ion-select-option>
+
+
+                <ion-select-option
+                  *ngFor="
+                    let generacion
+                    of generaciones
+                  "
+                  [value]="generacion.id">
+
+                  {{
+                    generacion.nombre
+                  }}
+
+                </ion-select-option>
+
+
+              </ion-select>
+
+            </ion-col>
+
+
+            <ion-col
+              size="12"
+              size-md="4"
+              class="botones-filtro">
+
+
+              <ion-button
+                expand="block"
+                (click)="abrirFormularioNuevo()">
+
+                Agregar Pokémon
+
+              </ion-button>
+
+
+              <ion-button
+                expand="block"
+                fill="outline"
+                (click)="limpiarFiltros()">
+
+                Limpiar
+
+              </ion-button>
+
+
+            </ion-col>
+
+
+          </ion-row>
+
+        </ion-grid>
+
+
+      </ion-card-content>
+
+    </ion-card>
+
+
+    <!-- FORMULARIO CREAR / EDITAR -->
+
+    <ion-card
+      class="formulario-card"
+      *ngIf="mostrarFormulario">
+
+      <ion-card-content>
+
+
+        <h2>
+
+          {{
+            modoEdicion
+              ? 'Editar Pokémon'
+              : 'Agregar Pokémon'
+          }}
+
+        </h2>
+
+
+        <ion-grid>
+
+          <ion-row>
+
+
+            <!-- NOMBRE -->
+
+            <ion-col
+              size="12"
+              size-md="6">
+
+              <ion-input
+                label="Nombre"
+                label-placement="stacked"
+                fill="outline"
+                [(ngModel)]="nuevoPokemon.name">
+              </ion-input>
+
+            </ion-col>
+
+
+            <!-- IMAGEN -->
+
+            <ion-col
+              size="12"
+              size-md="6">
+
+              <ion-input
+                label="URL de imagen"
+                label-placement="stacked"
+                fill="outline"
+                placeholder="https://..."
+                [(ngModel)]="nuevoPokemon.image">
+              </ion-input>
+
+            </ion-col>
+
+
+            <!-- TIPO -->
+
+            <ion-col
+              size="12"
+              size-md="6">
+
+              <ion-select
+                label="Tipo"
+                label-placement="stacked"
+                fill="outline"
+                [(ngModel)]="nuevoPokemon.type">
+
+
+                <ion-select-option
+                  *ngFor="
+                    let tipo
+                    of tipos
+                  "
+                  [value]="tipo.name">
+
+                  {{
+                    tipo.name
+                    | titlecase
+                  }}
+
+                </ion-select-option>
+
+
+              </ion-select>
+
+            </ion-col>
+
+
+            <!-- GENERACIÓN -->
+
+            <ion-col
+              size="12"
+              size-md="6">
+
+              <ion-select
+                label="Generación"
+                label-placement="stacked"
+                fill="outline"
+                [(ngModel)]="nuevoPokemon.generation">
+
+
+                <ion-select-option
+                  *ngFor="
+                    let generacion
+                    of generaciones
+                  "
+                  [value]="generacion.id">
+
+                  {{
+                    generacion.nombre
+                  }}
+
+                </ion-select-option>
+
+
+              </ion-select>
+
+            </ion-col>
+
+
+            <!-- PS -->
+
+            <ion-col
+              size="6"
+              size-md="4">
+
+              <ion-input
+                type="number"
+                label="PS"
+                label-placement="stacked"
+                fill="outline"
+                [(ngModel)]="nuevoPokemon.hp">
+              </ion-input>
+
+            </ion-col>
+
+
+            <!-- ATAQUE -->
+
+            <ion-col
+              size="6"
+              size-md="4">
+
+              <ion-input
+                type="number"
+                label="Ataque"
+                label-placement="stacked"
+                fill="outline"
+                [(ngModel)]="nuevoPokemon.attack">
+              </ion-input>
+
+            </ion-col>
+
+
+            <!-- DEFENSA -->
+
+            <ion-col
+              size="6"
+              size-md="4">
+
+              <ion-input
+                type="number"
+                label="Defensa"
+                label-placement="stacked"
+                fill="outline"
+                [(ngModel)]="nuevoPokemon.defense">
+              </ion-input>
+
+            </ion-col>
+
+
+            <!-- ATAQUE ESPECIAL -->
+
+            <ion-col
+              size="6"
+              size-md="4">
+
+              <ion-input
+                type="number"
+                label="Ataque especial"
+                label-placement="stacked"
+                fill="outline"
+                [(ngModel)]="nuevoPokemon.specialAttack">
+              </ion-input>
+
+            </ion-col>
+
+
+            <!-- DEFENSA ESPECIAL -->
+
+            <ion-col
+              size="6"
+              size-md="4">
+
+              <ion-input
+                type="number"
+                label="Defensa especial"
+                label-placement="stacked"
+                fill="outline"
+                [(ngModel)]="nuevoPokemon.specialDefense">
+              </ion-input>
+
+            </ion-col>
+
+
+            <!-- VELOCIDAD -->
+
+            <ion-col
+              size="6"
+              size-md="4">
+
+              <ion-input
+                type="number"
+                label="Velocidad"
+                label-placement="stacked"
+                fill="outline"
+                [(ngModel)]="nuevoPokemon.speed">
+              </ion-input>
+
+            </ion-col>
+
+
+          </ion-row>
+
+        </ion-grid>
+
+
+        <p
+          class="mensaje-error"
+          *ngIf="mensajeFormulario">
+
+          {{ mensajeFormulario }}
+
+        </p>
+
+
+        <div class="botones-formulario">
+
+
+          <ion-button
+            (click)="guardarPokemon()">
+
+            {{
+              modoEdicion
+                ? 'Guardar cambios'
+                : 'Guardar Pokémon'
+            }}
+
+          </ion-button>
+
+
+          <ion-button
+            fill="outline"
+            color="medium"
+            (click)="cancelarFormulario()">
+
+            Cancelar
+
+          </ion-button>
+
+
+        </div>
+
+
+      </ion-card-content>
+
+    </ion-card>
+
+
+    <!-- CONTADOR -->
+
+    <div
+      class="resultado-info"
+      *ngIf="!cargando">
+
+      <span>
+
+        <strong>
+          {{ pokemonsBase.length }}
+        </strong>
+
+        originales activos
+
+      </span>
+
+
+      <span>
+
+        <strong>
+          {{ pokemonsPersonalizados.length }}
+        </strong>
+
+        agregados
+
+      </span>
+
+
+      <span>
+
+        <strong>
+          {{ pokemonsFiltrados.length }}
+        </strong>
+
+        mostrados
+
+      </span>
+
+    </div>
+
+
+    <!-- CARGANDO -->
+
+    <div
+      class="cargando"
+      *ngIf="cargando">
+
+      <ion-spinner
+        name="crescent">
+      </ion-spinner>
+
+      <p>
+        Cargando Pokémon...
+      </p>
+
+    </div>
+
+
+    <!-- TARJETAS -->
+
+    <ion-grid
+      *ngIf="!cargando">
+
+      <ion-row>
+
+
+        <ion-col
+          size="6"
+          size-md="4"
+          size-lg="3"
+          *ngFor="
+            let pokemon
+            of pokemonsFiltrados
+          ">
+
+
+          <ion-card
+            class="pokemon-card"
+            [class.personalizado]="pokemon.personalizado"
+            [class.editado]="pokemon.editado"
+            (click)="abrirPokemon(pokemon)">
+
+
+            <!-- ACCIONES -->
+
+            <div class="acciones">
+
+
+              <ion-button
+                color="primary"
+                size="small"
+                (click)="
+                  editarPokemon(
+                    pokemon,
+                    $event
+                  )
+                ">
+
+                Editar
+
+              </ion-button>
+
+
+              <ion-button
+                color="danger"
+                size="small"
+                (click)="
+                  eliminarPokemon(
+                    pokemon,
+                    $event
+                  )
+                ">
+
+                Eliminar
+
+              </ion-button>
+
+
+            </div>
+
+
+            <!-- NÚMERO -->
+
+            <div class="numero">
+
+              {{
+                formatearNumero(
+                  pokemon.id
+                )
+              }}
+
+            </div>
+
+
+            <!-- IMAGEN -->
+
+            <div class="imagen-container">
+
+              <img
+                [src]="pokemon.image"
+                [alt]="pokemon.name">
+
+            </div>
+
+
+            <ion-card-content>
+
+
+              <h2>
+
+                {{
+                  pokemon.name
+                  | titlecase
+                }}
+
+              </h2>
+
+
+              <p
+                *ngIf="
+                  !pokemon.personalizado
+                  &&
+                  !pokemon.editado
+                ">
+
+                Pokémon original
+
+              </p>
+
+
+              <p
+                class="etiqueta-personalizado"
+                *ngIf="
+                  pokemon.personalizado
+                ">
+
+                Pokémon agregado
+
+              </p>
+
+
+              <p
+                class="etiqueta-editado"
+                *ngIf="
+                  pokemon.editado
+                  &&
+                  !pokemon.personalizado
+                ">
+
+                Pokémon editado
+
+              </p>
+
+
+            </ion-card-content>
+
+
+          </ion-card>
+
+
+        </ion-col>
+
+
+      </ion-row>
+
+    </ion-grid>
+
+
+    <div
+      class="sin-resultados"
+      *ngIf="
+        !cargando
+        &&
+        pokemonsFiltrados.length === 0
+      ">
+
+      <h2>
+        No hay Pokémon
+      </h2>
+
+    </div>
+
+
   </div>
+
 </ion-content>

@@ -1,0 +1,257 @@
+ion-toolbar {
+  --background: #e3350d;
+  --color: white;
+}
+
+ion-title {
+  font-weight: 800;
+}
+
+ion-back-button {
+  --color: white;
+}
+
+ion-content {
+  --background: #f5f6f8;
+}
+
+
+.contenedor {
+  width: 100%;
+  max-width: 900px;
+
+  margin: auto;
+
+  padding: 25px;
+}
+
+
+ion-card {
+  border-radius: 20px;
+
+  background: white;
+
+  margin-bottom: 20px;
+
+  box-shadow:
+    0 5px 20px
+    rgba(0, 0, 0, 0.08);
+}
+
+
+.pokemon-principal {
+  position: relative;
+
+  text-align: center;
+}
+
+
+.numero {
+  position: absolute;
+
+  top: 20px;
+  right: 25px;
+
+  color: #999;
+
+  font-size: 20px;
+
+  font-weight: 800;
+}
+
+
+.pokemon-image {
+  width: 300px;
+  height: 300px;
+
+  object-fit: contain;
+}
+
+
+h1 {
+  margin-top: 0;
+
+  color: #222;
+
+  font-size: 38px;
+
+  font-weight: 900;
+}
+
+
+h2 {
+  color: #222;
+
+  font-weight: 800;
+}
+
+
+.personalizado {
+  color: #e3350d;
+
+  font-weight: 700;
+}
+
+
+.tipos {
+  display: flex;
+
+  justify-content: center;
+
+  flex-wrap: wrap;
+
+  gap: 7px;
+}
+
+
+ion-chip {
+  font-weight: 700;
+}
+
+
+.informacion {
+  display: flex;
+
+  justify-content: center;
+
+  gap: 60px;
+
+  margin-top: 30px;
+}
+
+
+.informacion div {
+  display: flex;
+
+  flex-direction: column;
+}
+
+
+.informacion strong {
+  color: #222;
+
+  font-size: 21px;
+}
+
+
+.informacion span {
+  color: #888;
+
+  margin-top: 5px;
+}
+
+
+/* ESTADÍSTICAS */
+
+.stat {
+  margin: 18px 0;
+}
+
+
+.stat-texto {
+  display: flex;
+
+  justify-content: space-between;
+
+  margin-bottom: 7px;
+
+  color: #333;
+}
+
+
+.barra {
+  width: 100%;
+  height: 12px;
+
+  background: #e5e5e5;
+
+  border-radius: 15px;
+
+  overflow: hidden;
+}
+
+
+.barra-valor {
+  height: 100%;
+
+  background: #e3350d;
+
+  border-radius: 15px;
+
+  transition:
+    width 0.4s ease;
+}
+
+
+.lista-botones,
+.movimientos {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 8px;
+}
+
+
+/* CARGANDO */
+
+.cargando {
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+
+  min-height: 400px;
+
+  color: #555;
+}
+
+
+.cargando ion-spinner {
+  width: 50px;
+  height: 50px;
+
+  color: #e3350d;
+}
+
+
+/* ERROR */
+
+.error {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-height: 400px;
+
+  text-align: center;
+}
+
+
+@media(max-width: 600px) {
+
+  .contenedor {
+    padding: 10px;
+  }
+
+  .pokemon-image {
+    width: 220px;
+    height: 220px;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+
+  .informacion {
+    gap: 20px;
+  }
+
+}

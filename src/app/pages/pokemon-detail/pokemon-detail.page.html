@@ -1,0 +1,381 @@
+<ion-header>
+
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+
+      <ion-back-button
+        defaultHref="/home">
+      </ion-back-button>
+
+    </ion-buttons>
+
+    <ion-title>
+      Detalles
+    </ion-title>
+
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+
+
+  <!-- CARGANDO -->
+
+  <div
+    class="cargando"
+    *ngIf="cargando">
+
+    <ion-spinner
+      name="crescent">
+    </ion-spinner>
+
+    <p>
+      Cargando información...
+    </p>
+
+  </div>
+
+
+  <!-- ERROR -->
+
+  <div
+    class="error"
+    *ngIf="
+      !cargando
+      &&
+      error
+    ">
+
+    <h2>
+      No se pudo cargar el Pokémon
+    </h2>
+
+    <ion-button
+      routerLink="/home">
+
+      Volver
+
+    </ion-button>
+
+  </div>
+
+
+  <!-- DETALLE -->
+
+  <div
+    class="contenedor"
+    *ngIf="
+      !cargando
+      &&
+      !error
+      &&
+      pokemon
+    ">
+
+
+    <ion-card
+      class="pokemon-principal">
+
+      <ion-card-content>
+
+
+        <div class="numero">
+
+          {{ numeroPokemon() }}
+
+        </div>
+
+
+        <img
+          class="pokemon-image"
+          [src]="imagenPokemon()"
+          [alt]="pokemon.name">
+
+
+        <h1>
+
+          {{
+            pokemon.name
+            | titlecase
+          }}
+
+        </h1>
+
+
+        <p
+          class="personalizado"
+          *ngIf="esPersonalizado">
+
+          Pokémon agregado manualmente
+
+        </p>
+
+
+        <div class="tipos">
+
+
+          <ion-chip
+            *ngFor="
+              let tipo
+              of pokemon.types
+            ">
+
+            {{
+              tipo.type.name
+              | titlecase
+            }}
+
+          </ion-chip>
+
+
+        </div>
+
+
+        <!-- ORIGINAL -->
+
+        <div
+          class="informacion"
+          *ngIf="!esPersonalizado">
+
+          <div>
+
+            <strong>
+              {{ pokemon.height / 10 }} m
+            </strong>
+
+            <span>
+              Altura
+            </span>
+
+          </div>
+
+
+          <div>
+
+            <strong>
+              {{ pokemon.weight / 10 }} kg
+            </strong>
+
+            <span>
+              Peso
+            </span>
+
+          </div>
+
+
+          <div>
+
+            <strong>
+              {{
+                pokemon.base_experience
+                || 'N/A'
+              }}
+            </strong>
+
+            <span>
+              Experiencia
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- PERSONALIZADO -->
+
+        <div
+          class="informacion"
+          *ngIf="esPersonalizado">
+
+          <div>
+
+            <strong>
+              {{ generacion }}
+            </strong>
+
+            <span>
+              Generación
+            </span>
+
+          </div>
+
+        </div>
+
+
+      </ion-card-content>
+
+    </ion-card>
+
+
+    <!-- ESTADÍSTICAS -->
+
+    <ion-card>
+
+      <ion-card-content>
+
+        <h2>
+          Estadísticas principales
+        </h2>
+
+
+        <div
+          class="stat"
+          *ngFor="
+            let stat
+            of pokemon.stats
+          ">
+
+
+          <div class="stat-texto">
+
+            <span>
+
+              {{
+                nombreStat(
+                  stat.stat.name
+                )
+              }}
+
+            </span>
+
+            <strong>
+
+              {{
+                stat.base_stat
+              }}
+
+            </strong>
+
+          </div>
+
+
+          <div class="barra">
+
+            <div
+              class="barra-valor"
+              [style.width.%]="
+                porcentajeStat(
+                  stat.base_stat
+                )
+              ">
+            </div>
+
+          </div>
+
+
+        </div>
+
+
+      </ion-card-content>
+
+    </ion-card>
+
+
+    <!-- HABILIDADES SOLO POKEAPI -->
+
+    <ion-card
+      *ngIf="
+        !esPersonalizado
+        &&
+        pokemon.abilities?.length
+      ">
+
+      <ion-card-content>
+
+        <h2>
+          Habilidades
+        </h2>
+
+
+        <div class="lista-botones">
+
+
+          <ion-button
+            fill="outline"
+            *ngFor="
+              let habilidad
+              of pokemon.abilities
+            "
+            (click)="
+              verHabilidad(
+                habilidad
+              )
+            ">
+
+            {{
+              capitalizar(
+                habilidad
+                  .ability
+                  .name
+              )
+            }}
+
+          </ion-button>
+
+
+        </div>
+
+
+      </ion-card-content>
+
+    </ion-card>
+
+
+    <!-- MOVIMIENTOS SOLO POKEAPI -->
+
+    <ion-card
+      *ngIf="
+        !esPersonalizado
+        &&
+        pokemon.moves?.length
+      ">
+
+      <ion-card-content>
+
+        <h2>
+          Movimientos
+        </h2>
+
+
+        <div class="movimientos">
+
+
+          <ion-button
+            size="small"
+            fill="outline"
+            *ngFor="
+              let movimiento
+              of pokemon.moves
+            "
+            (click)="
+              verMovimiento(
+                movimiento
+              )
+            ">
+
+            {{
+              capitalizar(
+                movimiento
+                  .move
+                  .name
+              )
+            }}
+
+          </ion-button>
+
+
+        </div>
+
+
+      </ion-card-content>
+
+    </ion-card>
+
+
+  </div>
+
+
+</ion-content>

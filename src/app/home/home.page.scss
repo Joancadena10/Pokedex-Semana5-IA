@@ -1,27 +1,393 @@
-#container {
+ion-toolbar {
+  --background: #e3350d;
+  --color: white;
+}
+
+ion-title {
+  font-weight: 800;
+}
+
+ion-content {
+  --background: #f5f6f8;
+}
+
+
+.contenedor {
+  width: 100%;
+  max-width: 1300px;
+
+  margin: auto;
+
+  padding: 25px;
+}
+
+
+/* ENCABEZADO */
+
+.hero {
   text-align: center;
 
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  padding: 20px 0;
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
+.hero h1 {
   margin: 0;
+
+  color: #222;
+
+  font-size: 42px;
+
+  font-weight: 900;
 }
 
-#container a {
-  text-decoration: none;
+.hero p {
+  color: #777;
+
+  font-size: 17px;
+}
+
+
+/* FILTROS */
+
+.busqueda-card {
+  max-width: 1100px;
+
+  margin:
+    0 auto
+    30px auto;
+
+  border-radius: 18px;
+
+  background: white;
+
+  box-shadow:
+    0 5px 20px
+    rgba(0, 0, 0, 0.08);
+}
+
+ion-searchbar {
+  --border-radius: 12px;
+}
+
+ion-select {
+  width: 100%;
+
+  min-height: 58px;
+}
+
+.botones-filtro {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+}
+
+.botones-filtro ion-button {
+  flex: 1;
+}
+
+
+/* FORMULARIO */
+
+.formulario-card {
+  max-width: 1000px;
+
+  margin:
+    0 auto
+    30px auto;
+
+  border-radius: 20px;
+
+  background: white;
+
+  box-shadow:
+    0 5px 20px
+    rgba(0, 0, 0, 0.08);
+}
+
+.formulario-card h2 {
+  margin-top: 0;
+
+  color: #222;
+
+  font-size: 26px;
+
+  font-weight: 800;
+}
+
+ion-input {
+  margin-bottom: 8px;
+}
+
+.botones-formulario {
+  display: flex;
+
+  gap: 10px;
+
+  margin-top: 15px;
+}
+
+.mensaje-error {
+  color: #d32f2f;
+
+  font-weight: 700;
+}
+
+
+/* CONTADOR */
+
+.resultado-info {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 25px;
+
+  margin:
+    20px 10px;
+
+  color: #666;
+}
+
+.resultado-info strong {
+  color: #222;
+}
+
+
+/* TARJETA */
+
+.pokemon-card {
+  position: relative;
+
+  margin: 8px;
+
+  border-radius: 20px;
+
+  background: white;
+
+  cursor: pointer;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.pokemon-card:hover {
+  transform:
+    translateY(-7px);
+
+  box-shadow:
+    0 12px 30px
+    rgba(0, 0, 0, 0.15);
+}
+
+
+/* AGREGADO */
+
+.pokemon-card.personalizado {
+  border:
+    2px solid
+    #e3350d;
+}
+
+
+/* EDITADO */
+
+.pokemon-card.editado {
+  border:
+    2px solid
+    #3880ff;
+}
+
+
+/* BOTONES */
+
+.acciones {
+  position: absolute;
+
+  top: 8px;
+  left: 8px;
+
+  z-index: 50;
+
+  display: flex;
+
+  gap: 3px;
+}
+
+.acciones ion-button {
+  font-size: 10px;
+
+  --padding-start: 7px;
+  --padding-end: 7px;
+
+  --border-radius: 7px;
+}
+
+
+/* ID */
+
+.numero {
+  position: absolute;
+
+  top: 17px;
+  right: 17px;
+
+  z-index: 20;
+
+  color: #999;
+
+  font-weight: 800;
+}
+
+
+/* IMAGEN */
+
+.imagen-container {
+  height: 220px;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  padding: 35px 20px 20px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #fafafa,
+      #ffffff
+    );
+}
+
+.imagen-container img {
+  width: 175px;
+  height: 175px;
+
+  object-fit: contain;
+
+  transition:
+    transform 0.2s ease;
+}
+
+.pokemon-card:hover img {
+  transform:
+    scale(1.08);
+}
+
+
+/* INFORMACIÓN */
+
+ion-card-content {
+  text-align: center;
+}
+
+ion-card-content h2 {
+  margin: 0;
+
+  color: #222;
+
+  font-size: 21px;
+
+  font-weight: 800;
+}
+
+ion-card-content p {
+  color: #999;
+
+  margin-top: 5px;
+}
+
+.etiqueta-personalizado {
+  color: #e3350d !important;
+
+  font-weight: 700;
+}
+
+.etiqueta-editado {
+  color: #3880ff !important;
+
+  font-weight: 700;
+}
+
+
+/* CARGANDO */
+
+.cargando {
+  text-align: center;
+
+  padding: 100px 0;
+
+  color: #555;
+}
+
+.cargando ion-spinner {
+  width: 50px;
+  height: 50px;
+
+  color: #e3350d;
+}
+
+
+/* SIN RESULTADOS */
+
+.sin-resultados {
+  text-align: center;
+
+  padding: 80px;
+
+  color: #777;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width: 600px) {
+
+  .contenedor {
+    padding: 10px;
+  }
+
+  .hero h1 {
+    font-size: 32px;
+  }
+
+  .botones-filtro {
+    flex-direction: column;
+  }
+
+  .botones-filtro ion-button {
+    width: 100%;
+  }
+
+  .botones-formulario {
+    flex-direction: column;
+  }
+
+  .imagen-container {
+    height: 160px;
+
+    padding-top: 45px;
+  }
+
+  .imagen-container img {
+    width: 120px;
+    height: 120px;
+  }
+
+  .acciones {
+    flex-direction: column;
+  }
+
+  .acciones ion-button {
+    margin: 0;
+
+    font-size: 8px;
+  }
+
 }
