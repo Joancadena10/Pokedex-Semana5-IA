@@ -21,36 +21,30 @@ export function construirCatalogoInicial(registros: readonly RegistroPokemon[]):
     throw new Error('Datos no disponibles');
   }
 
-  const bulbasaur = registros.find((registro) =>
-    typeof registro?.url === 'string' && /\/pokemon-species\/1\/?$/.test(registro.url));
-  const charmander = registros.find((registro) =>
-    typeof registro?.url === 'string' && /\/pokemon-species\/4\/?$/.test(registro.url));
-  const squirtle = registros.find((registro) =>
-    typeof registro?.url === 'string' && /\/pokemon-species\/7\/?$/.test(registro.url));
+  // La misma definición controla validación, orden y tarjetas mostradas.
+  const admitidos = [
+    { id: 1, name: 'Bulbasaur' },
+    { id: 4, name: 'Charmander' },
+    { id: 7, name: 'Squirtle' },
+  ] as const;
 
-  if (
-    bulbasaur?.name?.toLowerCase() !== 'bulbasaur' ||
-    charmander?.name?.toLowerCase() !== 'charmander' ||
-    squirtle?.name?.toLowerCase() !== 'squirtle'
-  ) {
-    throw new Error('Datos no disponibles');
-  }
+  return admitidos.map(({ id, name }) => {
+    const registro = registros.find((item) => {
+      if (typeof item?.url !== 'string') {
+        return false;
+      }
+      const identificador = item.url.match(/\/pokemon-species\/(\d+)\/?$/)?.[1];
+      return Number(identificador) === id;
+    });
 
-  return [
-    {
-      id: 1,
-      name: 'Bulbasaur',
-      image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png',
-    },
-    {
-      id: 4,
-      name: 'Charmander',
-      image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png',
-    },
-    {
-      id: 7,
-      name: 'Squirtle',
-      image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png',
-    },
-  ];
+    if (typeof registro?.name !== 'string' || registro.name.toLowerCase() !== name.toLowerCase()) {
+      throw new Error('Datos no disponibles');
+    }
+
+    return {
+      id,
+      name,
+      image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${id}.png`,
+    };
+  });
 }
