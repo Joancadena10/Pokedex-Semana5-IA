@@ -1,15 +1,14 @@
 import { TestBed } from '@angular/core/testing';
-import { Pokemon } from './pokemon';
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { PokemonService } from './pokemon';
 
-describe('Pokemon', () => {
-  let service: Pokemon;
+describe('PokemonService', () => {
+  it('se puede crear con el cliente HTTP configurado', () => {
+    TestBed.configureTestingModule({
+      providers: [provideHttpClient(), provideHttpClientTesting()],
+    });
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(Pokemon);
-  });
-
-  it('should be created', () => {
-    expect(service).toBeTruthy();
+    expect(TestBed.inject(PokemonService)).toBeTruthy();
   });
 });

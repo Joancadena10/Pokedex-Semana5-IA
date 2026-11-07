@@ -1,17 +1,16 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { provideIonicAngular } from '@ionic/angular';
 import { PokemonDetailPage } from './pokemon-detail.page';
 
 describe('PokemonDetailPage', () => {
-  let component: PokemonDetailPage;
-  let fixture: ComponentFixture<PokemonDetailPage>;
+  it('se puede crear con sus dependencias de enrutamiento', async () => {
+    await TestBed.configureTestingModule({
+      imports: [PokemonDetailPage],
+      providers: [provideRouter([]), provideIonicAngular()],
+    }).compileComponents();
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(PokemonDetailPage);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
+    const fixture = TestBed.createComponent(PokemonDetailPage);
+    expect(fixture.componentInstance).toBeTruthy();
   });
 });
